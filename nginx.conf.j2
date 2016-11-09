@@ -3,18 +3,18 @@ server {
     server_name {{ server_name|default('127.0.0.1') }};
 
     location /travel/ {
-      proxy_pass http://etools_travel:8080/;
+      proxy_pass http://travel:8080/;
     }
     location /pmp/ {
-      proxy_pass http://etools_pmp:8080/;
+      proxy_pass http://pmp:8080/;
     }
     location /dashboard/ {
-      proxy_pass http://etools_dashboard:8080/;
+      proxy_pass http://dashboard:8080/;
     }
     location / {
       proxy_set_header Host $host:$server_port;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass http://django:8080/;
+      proxy_pass http://backend:8080/;
     }
 }
