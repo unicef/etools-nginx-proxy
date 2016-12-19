@@ -2,15 +2,13 @@ server {
     listen      80;
     server_name {{ server_name|default('127.0.0.1') }};
 
-    location /travel/ {
-      proxy_pass http://travel:8080/;
-    }
     location /pmp/ {
       proxy_pass http://pmp:8080/;
     }
-    location /dashboard/ {
-      proxy_pass http://dashboard:8080/;
+    location /t2f/ {
+      proxy_pass http://travel:8080/;
     }
+
     location / {
       proxy_set_header Host $host:$server_port;
       proxy_set_header X-Real-IP $remote_addr;
