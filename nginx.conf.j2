@@ -8,6 +8,9 @@ server {
     location /t2f/ {
       proxy_pass http://travel:8080/;
     }
+    location /dash/ {
+      proxy_pass http://dashboard:8080/;
+    }
 
     location / {
       proxy_set_header Host $host:$server_port;
