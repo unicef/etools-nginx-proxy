@@ -1,12 +1,15 @@
-FROM nginx
-RUN apt-get update && \
-    apt-get install --assume-yes python-dev python-setuptools python-pip
+FROM nginx:alpine
+ENV NX_CONFIG ""
+
 ADD nginx-built.conf /
-ADD nginx.conf /
-ADD docker-entrypoint.sh /
-RUN chmod a+rx /docker-entrypoint.sh
-RUN chmod a+rx /nginx.conf
-RUN chmod a+rx /nginx-built.conf
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ADD nginx.conf /etc/nginx/conf.d/default.conf
+ADD docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+RUN chmod a+rx /usr/local/bin/docker-entrypoint.sh \
+    && chmod a+r /etc/nginx/conf.d/default.conf
+
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["nginx"]
